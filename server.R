@@ -1,50 +1,57 @@
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session){
-  # FEMALE HIGHLIGHTS
-  output$femaleinfo = renderValueBox({
-    infoBox(title = "Not-so-fun fact:", subtitle = "Only 5% of Fortune 500 CEOs in 2018 are female. You can check them out below!", icon = icon("venus"), color = "fuchsia")
-  })
-  output$female_image = renderImage({
-    filename = normalizePath(file.path("./images",
-                paste0(f500_females %>% filter(., CEO == input$f_ceo) %>% pull(imagenames), ".jpg")))
-    list(src = filename, width = "100%")
-  }, deleteFile = FALSE)
-  output$female_f500_overview_name = renderInfoBox({
-    infoBox(title = "Company CEO", value = input$f_ceo, icon = icon("female"), color = "fuchsia")
-  })
-  output$female_f500_overview_company = renderInfoBox({
-    f_overview = f500_females %>% filter(., `CEO` == input$f_ceo) %>% select(., Title, Rank)
-    infoBox(title = "Company name", value = pull(f_overview, Title), color = "fuchsia")
-  })
-  output$female_f500_overview_rank = renderInfoBox({
-    f_overview = f500_females %>% filter(., `CEO` == input$f_ceo) %>% select(., Title, Rank)
-    infoBox(title = "Current rank", value = pull(f_overview, Rank), icon = icon("fas fa-trophy"), color = "fuchsia")
-  })
-  output$female_biography <- renderUI({
-    str1 <- f500_females %>% filter(., `CEO` == input$f_ceo) %>% select(., fem_bios) %>% pull()
-    link = f500_females %>% filter(., `CEO` == input$f_ceo) %>% select(., fem_bio_links) %>% pull()
-    str2 <- paste("To learn more about", input$f_ceo, "you can click", a("here", class = "web", href = link))
-    HTML(paste(str1, str2, sep = '<br/><br/>'))
-
-  })
 
   # OVERVIEW
-  output$overview_rev = renderGvis ({
-    gvisHistogram(f500[,"Revenues ($M)", drop = F],
-                  options=list(title = "Distribution of Revenues ($M)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+  output$overview_rev = renderGvis({
+    ## Show overall distribution of revenues
+    if (input$radio == 1) {
+      gvisHistogram(f500[,"Revenues ($M)", drop = F],
+                    options=list(title = "Distribution of Revenues ($M)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+      
+    } else if (input$radio == 2){
+      gvisLineChart(f500, xvar = "Rank", yvar = "Revenues ($M)",
+                   options=list(title = "Distribution of Revenues per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+    }
+    ## Show revenue per employee
+    else if (input$radio == 3){
+        gvisHistogram(f500[,"Revenues per Employee ($M)", drop = F]*1000,
+                      options=list(title = "Distribution of Revenues per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+    }
   })
-  output$overview_prof = renderGvis ({
-    gvisHistogram(f500[,"Profits ($M)", drop = F],
-                  options=list(title = "Distribution of Profits ($M)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+  
+  output$overview_prof = renderGvis({
+    ## Show overall distribution of revenues
+    if (input$radio == 1) {
+      gvisHistogram(f500[,"Profits ($M)", drop = F],
+                    options=list(title = "Distribution of Profits ($M)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+      
+    } else if (input$radio == 2){
+      gvisLineChart(f500, xvar = "Rank", yvar = "Profits ($M)",
+                    options=list(title = "Distribution of Profits per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+    }
+    ## Show revenue per employee
+    else if (input$radio == 3){
+      gvisHistogram(f500[,"Profits per Employee ($M)", drop = F]*1000,
+                    options=list(title = "Distribution of Profits per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+    }
   })
-  output$overview_rev_emp = renderGvis ({
-    gvisHistogram(f500[,"Revenues per Employee ($M)", drop = F]*1000,
-                  options=list(title = "Distribution of Revenues per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
-  })
-  output$overview_prof_emp = renderGvis ({
-    gvisHistogram(f500[,"Profits per Employee ($M)", drop = F]*1000,
-                  options=list(title = "Distribution of Profits per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
-  })
+  
+  # output$overview_rev = renderGvis ({
+  #   gvisHistogram(f500[,"Revenues ($M)", drop = F],
+  #                 options=list(title = "Distribution of Revenues ($M)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+  # })
+  # output$overview_prof = renderGvis ({
+  #   gvisHistogram(f500[,"Profits ($M)", drop = F],
+  #                 options=list(title = "Distribution of Profits ($M)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+  # })
+  # output$overview_rev_emp = renderGvis ({
+  #   gvisHistogram(f500[,"Revenues per Employee ($M)", drop = F]*1000,
+  #                 options=list(title = "Distribution of Revenues per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+  # })
+  # output$overview_prof_emp = renderGvis ({
+  #   gvisHistogram(f500[,"Profits per Employee ($M)", drop = F]*1000,
+  #                 options=list(title = "Distribution of Profits per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+  # })
   output$overview_employees = renderGvis ({
     gvisHistogram(f500[,"Employees", drop = F],
                   options=list(title = "Distribution of Employees", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
@@ -55,19 +62,38 @@ shinyServer(function(input, output, session){
   })
   
   output$overview_rev_vs_prof = renderGvis({
-    gvisScatterChart(rev_prof_tt,options=list(width="auto", height="850px",
-                                              #title="Revenues and Profits",
-                                              hAxis="{title:'Revenue ($M)'}",
-                                              vAxis="{title:'Profit ($M)'}",
-                                              explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+    if (input$radio == 1 | input$radio == 2){
+      gvisScatterChart(rev_prof_tt,options=list(width="auto", height="850px",
+                                                title="Revenues vs. Profits",
+                                                hAxis="{title:'Revenue ($M)'}",
+                                                vAxis="{title:'Profit ($M)'}",
+                                                explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+    } else if (input$radio ==3){
+      gvisScatterChart(e_rev_prof_tt,options=list(width="auto", height="850px",
+                                                  #title="Revenues and Profits",
+                                                  hAxis="{title:'Revenue per Employee ($1,000)'}",
+                                                  vAxis="{title:'Profit per Employee ($1,000)'}",
+                                                  explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+      }
   })
+
   
-  output$overview_e_rev_vs_prof = renderGvis({
-    gvisScatterChart(e_rev_prof_tt,options=list(width="auto", height="850px",
-                                              #title="Revenues and Profits",
-                                              hAxis="{title:'Revenue per Employee ($1,000)'}",
-                                              vAxis="{title:'Profit per Employee ($1,000)'}",
-                                              explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+  
+  output$overview_rev = renderGvis({
+    ## Show overall distribution of revenues
+    if (input$radio == 1) {
+      gvisHistogram(f500[,"Revenues ($M)", drop = F],
+                    options=list(title = "Distribution of Revenues ($M)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+      
+    } else if (input$radio == 2){
+      gvisLineChart(f500, xvar = "Rank", yvar = "Revenues ($M)",
+                    options=list(title = "Distribution of Revenues per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+    }
+    ## Show revenue per employee
+    else if (input$radio == 3){
+      gvisHistogram(f500[,"Revenues per Employee ($M)", drop = F]*1000,
+                    options=list(title = "Distribution of Revenues per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+    }
   })
   
   
@@ -217,30 +243,30 @@ shinyServer(function(input, output, session){
   # BREAKDOWN BY SECTOR
   output$sectors1 = renderGvis ({
     gvisPieChart(subset(by_sector_industry, Sector == input$sectors1)[,c(2,3)],
-                 options = list(title = input$sectors1, width = "auto", height = "400px"))
+                 options = list(title = paste("Industries in", input$sectors1, "Sector"), width = "auto", height = "400px"))
   })
   output$sectors2 = renderGvis ({
     gvisPieChart(subset(by_sector_industry, Sector == input$sectors2)[,c(2,3)],
-                 options = list(title = input$sectors2, width = "auto", height = "400px"))
+                 options = list(title = paste("Industries in", input$sectors2, "Sector"), width = "auto", height = "400px"))
   })
   
   ## Should try and stack the revenue (take out profits to get costs) and profits
   output$sectors1_rev_bar = renderGvis ({
     gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_rev = sum(`Revenues ($M)`)), Sector == input$sectors1)[,c(2,3)] %>% arrange(., desc(ttl_rev)), xvar = "Industry", yvar = "ttl_rev",
-                 options = list(title = input$sectors1, width = "auto", height = "400px"))
+                 options = list(title = paste("Total revenues by industry in", input$sectors1, "Sector"), width = "auto", height = "400px"))
   })
   output$sectors2_rev_bar = renderGvis ({
     gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_rev = sum(`Revenues ($M)`)), Sector == input$sectors2)[,c(2,3)] %>% arrange(., desc(ttl_rev)), xvar = "Industry", yvar = "ttl_rev",
-                 options = list(title = input$sectors2, width = "auto", height = "400px"))
+                 options = list(title = paste("Total revenues by industry in", input$sectors2, "Sector"), width = "auto", height = "400px"))
   })
   
   output$sectors1_prof_bar = renderGvis ({
     gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_prof = sum(`Profits ($M)`)), Sector == input$sectors1)[,c(2,3)] %>% arrange(., desc(ttl_prof)), xvar = "Industry", yvar = "ttl_prof",
-                 options = list(title = input$sectors1, width = "auto", height = "400px"))
+                 options = list(title = paste("Total profits by industry in", input$sectors1, "Sector"), width = "auto", height = "400px"))
   })
   output$sectors2_prof_bar = renderGvis ({
     gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_prof = sum(`Profits ($M)`)), Sector == input$sectors2)[,c(2,3)] %>% arrange(., desc(ttl_prof)), xvar = "Industry", yvar = "ttl_prof",
-                 options = list(title = input$sectors2, width = "auto", height = "400px"))
+                 options = list(title = paste("Total profits by industry in", input$sectors2, "Sector"), width = "auto", height = "400px"))
   })
 
   
@@ -350,7 +376,33 @@ shinyServer(function(input, output, session){
   })
   
   
-  
+  # FEMALE HIGHLIGHTS
+  output$femaleinfo = renderValueBox({
+    infoBox(title = "Not-so-fun fact:", subtitle = "Only 5% of Fortune 500 CEOs in 2018 are female. You can check them out below!", icon = icon("venus"), color = "fuchsia")
+  })
+  output$female_image = renderImage({
+    filename = normalizePath(file.path("./images",
+                                       paste0(f500_females %>% filter(., CEO == input$f_ceo) %>% pull(imagenames), ".jpg")))
+    list(src = filename, width = "100%")
+  }, deleteFile = FALSE)
+  output$female_f500_overview_name = renderInfoBox({
+    infoBox(title = "Company CEO", value = input$f_ceo, icon = icon("female"), color = "fuchsia")
+  })
+  output$female_f500_overview_company = renderInfoBox({
+    f_overview = f500_females %>% filter(., `CEO` == input$f_ceo) %>% select(., Title, Rank)
+    infoBox(title = "Company name", value = pull(f_overview, Title), color = "fuchsia")
+  })
+  output$female_f500_overview_rank = renderInfoBox({
+    f_overview = f500_females %>% filter(., `CEO` == input$f_ceo) %>% select(., Title, Rank)
+    infoBox(title = "Current rank", value = pull(f_overview, Rank), icon = icon("fas fa-trophy"), color = "fuchsia")
+  })
+  output$female_biography <- renderUI({
+    str1 <- f500_females %>% filter(., `CEO` == input$f_ceo) %>% select(., fem_bios) %>% pull()
+    link = f500_females %>% filter(., `CEO` == input$f_ceo) %>% select(., fem_bio_links) %>% pull()
+    str2 <- paste("To learn more about", input$f_ceo, "you can click", a("here", class = "web", href = link))
+    HTML(paste(str1, str2, sep = '<br/><br/>'))
+    
+  })
   
   
   

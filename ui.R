@@ -19,7 +19,7 @@ shinyUI(
         menuItem("Sector Breakdown", tabName = "sector", icon = icon("far fa-building")),
         
         ## F500 LOCATION BREAKDOWN
-        menuItem("Company by Location", tabName = "location", icon = icon("fas fa-map-marker-alt")),
+        menuItem("Company by Location", tabName = "location", icon = icon("fas fa-map-marked-alt")),
         
         ## GENDER BREAKDOWN
         menuItem("THE FUTURE IS FEMALE", tabName = "females", icon = icon("female"))
@@ -34,6 +34,10 @@ shinyUI(
       tabItems(
         ## Tab for overview
         tabItem(tabName = "overview",
+                column(12, radioButtons(inputId="radio", label = h5("How would you like to see the data?"),
+                             choices = list("Overall distributions" = 1, "By rank" = 2, "Per employee" = 3), 
+                             selected = 1,
+                             inline = TRUE)),
                 column(5, fluidRow(box(htmlOutput("overview_rev"), br(),
                                        htmlOutput("overview_prof"), br(),
                                        htmlOutput("overview_employees"), br(),
@@ -44,6 +48,13 @@ shinyUI(
                 column(7, box(htmlOutput("overview_rev_vs_prof"), width = 12, height = "900px"))#,
                 #column(6, fluidRow(box(htmlOutput("overview_e_rev_vs_prof"), width = 12)))
         ),
+        
+        
+        
+        
+        
+        
+        
         
         
         
