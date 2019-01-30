@@ -34,7 +34,6 @@ shinyUI(
       tabItems(
         ## Tab for overview
         tabItem(tabName = "overview",
-                tabPanel("Charts"),
                 column(5, fluidRow(box(htmlOutput("overview_rev"), br(),
                                        htmlOutput("overview_prof"), br(),
                                        htmlOutput("overview_employees"), br(),
@@ -126,14 +125,8 @@ shinyUI(
         
         ## Tab for Fortune 500 locations
         tabItem(tabName = "location",
-                ## MAP
-                column(6, fluidRow(box(htmlOutput("location"),
-                                       br(),
-                                       checkboxInput("show", "Show comparison", value = FALSE),
-                                       height = 700, width = 12))
-                ),
                 ## STATE 1
-                  column(6, selectizeInput(inputId = "state1",
+                  column(3, selectizeInput(inputId = "state1",
                                            label = "State 1",
                                            choices = state_choices,
                                            selected = "NY"),
@@ -141,10 +134,10 @@ shinyUI(
                                       valueBoxOutput("avgprof_state1", width = 6), width = 12)),
                          fluidRow(box(htmlOutput("revenue_hist_state1", width = 12), width = 12)),
                          fluidRow(box(htmlOutput("prof_hist_state1", width = 12), width = 12)),
-                         fluidRow(box(dataTableOutput("state1_table"), width = 6))
+                         fluidRow(box(dataTableOutput("state1_table"), width = 12))
                          ),
                   ## STATE 2
-                  column(6, selectizeInput(inputId = "state2",
+                  column(3, selectizeInput(inputId = "state2",
                                            label = "State 2",
                                            choices = state_choices,
                                            selected = "CA"),
@@ -152,8 +145,14 @@ shinyUI(
                                       valueBoxOutput("avgprof_state2", width = 6), width = 12)),
                          fluidRow(box(htmlOutput("revenue_hist_state2", width = 12), width = 12)),
                          fluidRow(box(htmlOutput("prof_hist_state2", width = 12), width = 12)),
-                         fluidRow(box(dataTableOutput("state2_table"), width = 6))
-                         )
+                         fluidRow(box(dataTableOutput("state2_table"), width = 12))
+                         ),
+                ## MAP
+                column(6, fluidRow(box(htmlOutput("location"),
+                                       br(),
+                                       checkboxInput("show", "Show comparison", value = FALSE),
+                                       height = 700, width = 12))
+                )
                 ),
 
         

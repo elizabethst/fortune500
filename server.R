@@ -342,11 +342,11 @@ shinyServer(function(input, output, session){
   })
   output$state1_table = renderDataTable({
     state1_ranks = f500 %>% filter(., State == input$state1) %>% select(., Rank, Title) %>% arrange(., Rank)
-    datatable(state1_ranks, rownames = F, options=list(lengthMenu = c(5, 10, 15, 20)))
+    datatable(state1_ranks, rownames = F, caption = paste("Company ranks in", input$state1), options=list(lengthMenu = c(5, 10, 15, 20)))
   })
   output$state2_table = renderDataTable({
     state2_ranks = f500 %>% filter(., State == input$state2) %>% select(., Rank, Title) %>% arrange(., Rank)
-    datatable(state2_ranks, rownames = F, options=list(lengthMenu = c(5, 10, 15, 20)))
+    datatable(state2_ranks, rownames = F, caption = paste("Company ranks in", input$state2), options=list(lengthMenu = c(5, 10, 15, 20)))
   })
   
   
