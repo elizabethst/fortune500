@@ -101,45 +101,45 @@ shinyServer(function(input, output, session){
   # COMPANY 1
   output$company1_CEO = renderInfoBox({
     current_CEO = f500 %>% filter(., Title == input$company1) %>% pull(., `CEO`)
-    infoBox(title = "CEO", value = current_CEO)
+    infoBox(title = "CEO", value = current_CEO, color = "black", icon = icon("fas fa-user-tie"))
   })
   output$company1_location = renderInfoBox({
     city_state = f500 %>% filter(., Title == input$company1) %>% select(., `City`, `State`)
     city = city_state %>% pull(., `City`)
     state = city_state %>% pull(., `State`)
-    infoBox(title = "Company HQ", value = paste(city, state, sep = ", "))
+    infoBox(title = "Company HQ", value = paste(city, state, sep = ", "), color = "black", icon = icon("fas fa-location-arrow"))
   })
   output$company1_sector = renderInfoBox({
     pf_sector = f500 %>% filter(., Title == input$company1) %>% pull(., `Sector`)
-    infoBox(title = "Sector", value = pf_sector)
+    infoBox(title = "Sector", value = pf_sector, color = "black", icon = icon("fas fa-chart-pie"))
   })
   output$company1_industry = renderInfoBox({
     pf_industry = f500 %>% filter(., Title == input$company1) %>% pull(., `Industry`)
-    infoBox(title = "Industry", value = pf_industry)
+    infoBox(title = "Industry", value = pf_industry, color = "black", icon = icon("fas fa-industry"))
   })
   output$company1_rank = renderInfoBox({
     ranking = f500 %>% filter(., Title == input$company1) %>% pull(., Rank)
-    infoBox(title = "Current Rank", value = ranking)
+    infoBox(title = "Current Rank", value = ranking, color = "black", icon = icon("fas fa-trophy"))
   })
   output$company1_rank_change = renderInfoBox({
     ranking_change = f500 %>% filter(., Title == input$company1) %>% pull(., `Change in Rank`)
-    infoBox(title = "Change in Rank", value = ranking_change, icon = icon("fas fa-exchange-alt"))
+    infoBox(title = "Change in Rank", value = ranking_change, color = "black", icon = icon("fas fa-random"))
   })
   output$company1_revenue = renderInfoBox({
     revenue = f500 %>% filter(., Title == input$company1) %>% pull(., `Revenues ($M)`)
-    infoBox(title = "Revenue ($M)", value = paste0("$",prettyNum(revenue, big.mark = ",")))
+    infoBox(title = "Revenue ($M)", value = paste0("$",prettyNum(revenue, big.mark = ",")), color = "black", icon = icon("fas fa-money-bill"))
   })
   output$company1_revenue_change = renderInfoBox({
     revenue_change = f500 %>% filter(., Title == input$company1) %>% pull(., `Revenue Change`)
-    infoBox(title = "Change in Revenue", value = revenue_change)
+    infoBox(title = "Change in Revenue", value = revenue_change, color = "black", icon = icon("fas fa-chart-line"))
   })
   output$company1_profit = renderInfoBox({
     profit = f500 %>% filter(., Title == input$company1) %>% pull(., `Profits ($M)`)
-    infoBox(title = "Profit ($M)", value = paste0("$",prettyNum(profit, big.mark = ",")))
+    infoBox(title = "Profit ($M)", value = paste0("$",prettyNum(profit, big.mark = ",")), color = "black", icon = icon("fas fa-hand-holding-usd"))
   })
   output$company1_profit_change = renderInfoBox({
     profit_change = f500 %>% filter(., Title == input$company1) %>% pull(., `Profit Change`)
-    infoBox(title = "Change in Profit", value = profit_change)
+    infoBox(title = "Change in Profit", value = profit_change, color = "black", icon = icon("fas fa-chart-line"))
   })
   output$company1_rev_emp = renderInfoBox({
     rev_emp = f500 %>% filter(., Title == input$company1) %>% pull(., `Revenues per Employee ($M)`)
@@ -151,64 +151,64 @@ shinyServer(function(input, output, session){
   })  
   output$company1_assets = renderInfoBox({
     prof_assets = f500 %>% filter(., Title == input$company1) %>% pull(., `Assets ($M)`)
-    infoBox(title = "Assets ($M)", value = paste0("$",prettyNum(prof_assets, big.mark = ",")))
+    infoBox(title = "Assets ($M)", value = paste0("$",prettyNum(prof_assets, big.mark = ",")), color = "black", icon = icon("fas fa-shopping-basket"))
   })
   output$company1_mkt_value = renderInfoBox({
     prof_mktvalue = f500 %>% filter(., Title == input$company1) %>% pull(., `Mkt Value as of 3/29/18 ($M)`)
-    infoBox(title = "Market Value ($M)", value = paste0("$",prettyNum(prof_mktvalue, big.mark = ",")))
+    infoBox(title = "Market Value ($M)", value = paste0("$",prettyNum(prof_mktvalue, big.mark = ",")), color = "black", icon = icon("fas fa-business-time"))
   })
   output$company1_employees = renderInfoBox({
     emp = f500 %>% filter(., Title == input$company1) %>% pull(., `Employees`)
-    infoBox(title = "Employees", value = prettyNum(emp, big.mark = ","))
+    infoBox(title = "Employees", value = prettyNum(emp, big.mark = ","), color = "black", icon = icon("fas fa-users"))
   })
   output$company1_years = renderInfoBox({
     years = f500 %>% filter(., Title == input$company1) %>% pull(., `Years on Fortune 500 List`)
-    infoBox(title = "Years on F500 List", value = years)
+    infoBox(title = "Years on F500 List", value = years, color = "black", icon = icon("far fa-calendar-alt"))
   })
   
   
   # COMPANY 2
   output$company2_CEO = renderInfoBox({
     current_CEO = f500 %>% filter(., Title == input$company2) %>% pull(., `CEO`)
-    infoBox(title = "CEO", value = current_CEO, icon = icon("fas fa-trophy"))
+    infoBox(title = "CEO", value = current_CEO, color = "black", icon = icon("fas fa-user-tie"))
   })
   output$company2_location = renderInfoBox({
     city_state = f500 %>% filter(., Title == input$company2) %>% select(., `City`, `State`)
     city = city_state %>% pull(., `City`)
     state = city_state %>% pull(., `State`)
-    infoBox(title = "Company HQ", value = paste(city, state, sep = ", "), icon = icon("fas fa-trophy"))
+    infoBox(title = "Company HQ", value = paste(city, state, sep = ", "), color = "black", icon = icon("fas fa-location-arrow"))
   })
   output$company2_sector = renderInfoBox({
     pf_sector = f500 %>% filter(., Title == input$company2) %>% pull(., `Sector`)
-    infoBox(title = "Sector", value = pf_sector, icon = icon("fas fa-trophy"))
+    infoBox(title = "Sector", value = pf_sector, color = "black", icon = icon("fas fa-chart-pie"))
   })
   output$company2_industry = renderInfoBox({
     pf_industry = f500 %>% filter(., Title == input$company2) %>% pull(., `Industry`)
-    infoBox(title = "Industry", value = pf_industry, icon = icon("fas fa-trophy"))
+    infoBox(title = "Industry", value = pf_industry, color = "black", icon = icon("fas fa-industry"))
   })
   output$company2_rank = renderInfoBox({
     ranking = f500 %>% filter(., Title == input$company2) %>% pull(., Rank)
-    infoBox(title = "Current Rank", value = ranking, icon = icon("fas fa-trophy"))
+    infoBox(title = "Current Rank", value = ranking, color = "black", icon = icon("fas fa-trophy"))
   })
   output$company2_rank_change = renderInfoBox({
     ranking_change = f500 %>% filter(., Title == input$company2) %>% pull(., `Change in Rank`)
-    infoBox(title = "Change in Rank", value = ranking_change, icon = icon("fas fa-exchange-alt"))
+    infoBox(title = "Change in Rank", value = ranking_change, color = "black", icon = icon("fas fa-random"))
   })
   output$company2_revenue = renderInfoBox({
     revenue = f500 %>% filter(., Title == input$company2) %>% pull(., `Revenues ($M)`)
-    infoBox(title = "Revenue ($M)", value = paste0("$",prettyNum(revenue, big.mark = ",")), icon = icon("fas fa-trophy"))
+    infoBox(title = "Revenue ($M)", value = paste0("$",prettyNum(revenue, big.mark = ",")), color = "black", icon = icon("fas fa-money-bill"))
   })
   output$company2_revenue_change = renderInfoBox({
     revenue_change = f500 %>% filter(., Title == input$company2) %>% pull(., `Revenue Change`)
-    infoBox(title = "Change in Revenue", value = revenue_change, icon = icon("fas fa-trophy"))
+    infoBox(title = "Change in Revenue", value = revenue_change, color = "black", icon = icon("fas fa-chart-line"))
   })
   output$company2_profit = renderInfoBox({
     profit = f500 %>% filter(., Title == input$company2) %>% pull(., `Profits ($M)`)
-    infoBox(title = "Profit ($M)", value = paste0("$",prettyNum(profit, big.mark = ",")), icon = icon("fas fa-trophy"))
+    infoBox(title = "Profit ($M)", value = paste0("$",prettyNum(profit, big.mark = ",")), color = "black", icon = icon("fas fa-hand-holding-usd"))
   })
   output$company2_profit_change = renderInfoBox({
     profit_change = f500 %>% filter(., Title == input$company2) %>% pull(., `Profit Change`)
-    infoBox(title = "Change in Profit", value = profit_change, icon = icon("fas fa-trophy"))
+    infoBox(title = "Change in Profit", value = profit_change, color = "black", icon = icon("fas fa-chart-line"))
   })
   output$company2_rev_emp = renderInfoBox({
     rev_emp = f500 %>% filter(., Title == input$company2) %>% pull(., `Revenues per Employee ($M)`)
@@ -216,23 +216,23 @@ shinyServer(function(input, output, session){
   })
   output$company2_prof_emp = renderInfoBox({
     prof_emp = f500 %>% filter(., Title == input$company2) %>% pull(., `Profits per Employee ($M)`)
-    infoBox(title = "Profit per Employee ($1000)", value = 1000*prof_emp, icon = icon("fas fa-trophy"))
+    infoBox(title = "Profit per Employee ($1000)", value = 1000*prof_emp, color = "black", icon = icon("fas fa-chart-line"))
   })  
   output$company2_assets = renderInfoBox({
     prof_assets = f500 %>% filter(., Title == input$company2) %>% pull(., `Assets ($M)`)
-    infoBox(title = "Assets ($M)", value = paste0("$",prettyNum(prof_assets, big.mark = ",")), icon = icon("fas fa-trophy"))
+    infoBox(title = "Assets ($M)", value = paste0("$",prettyNum(prof_assets, big.mark = ",")), color = "black", icon = icon("fas fa-shopping-basket"))
   })
   output$company2_mkt_value = renderInfoBox({
     prof_mktvalue = f500 %>% filter(., Title == input$company2) %>% pull(., `Mkt Value as of 3/29/18 ($M)`)
-    infoBox(title = "Market Value ($M)", value = paste0("$",prettyNum(prof_mktvalue, big.mark = ",")), icon = icon("fas fa-trophy"))
+    infoBox(title = "Market Value ($M)", value = paste0("$",prettyNum(prof_mktvalue, big.mark = ",")), color = "black", icon = icon("fas fa-business-time"))
   })
   output$company2_employees = renderInfoBox({
     emp = f500 %>% filter(., Title == input$company2) %>% pull(., `Employees`)
-    infoBox(title = "Employees", value = prettyNum(emp, big.mark = ","), icon = icon("fas fa-trophy"))
+    infoBox(title = "Employees", value = prettyNum(emp, big.mark = ","), color = "black", icon = icon("fas fa-users"))
   })
   output$company2_years = renderInfoBox({
     years = f500 %>% filter(., Title == input$company2) %>% pull(., `Years on Fortune 500 List`)
-    infoBox(title = "Years on F500 List", value = years, icon = icon("fas fa-trophy"))
+    infoBox(title = "Years on F500 List", value = years, color = "black", icon = icon("far fa-calendar-alt"))
   })
   
   
@@ -300,8 +300,8 @@ shinyServer(function(input, output, session){
   output$location = renderGvis({
     if (input$show) {
       gvisGeoChart(by_state %>% filter(., State == input$state1 | State == input$state2),
-                   "State",
-                   "Companies",
+                   locationvar = "State",
+                   colorvar = "Companies",
                    options=list(region="US",
                                 displayMode="regions",
                                 resolution="provinces",

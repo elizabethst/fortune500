@@ -7,7 +7,7 @@ shinyUI(
     dashboardSidebar(
       sidebarMenu(
         ## GENERAL OVERVIEW
-        menuItem("Overview of Fortune 500", tabName = "overview", icon = icon("fas fa-money-bill-alt")),
+        menuItem("Overview of Fortune 500", tabName = "overview", icon = icon("fas fa-money-bill")),
         
         # ## COMPANY PROFILE
         # menuItem("Company Profile", tabName = "profile", icon = icon("far fa-building")),
