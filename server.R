@@ -6,16 +6,16 @@ shinyServer(function(input, output, session){
     ## Show overall distribution of revenues
     if (input$radio == 1) {
       gvisHistogram(f500[,"Revenues ($M)", drop = F],
-                    options=list(title = "Distribution of Revenues ($M)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+                    options=list(title = "Distribution of Revenues ($M)", width="auto", height="150px", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
       
     } else if (input$radio == 2){
       gvisLineChart(f500, xvar = "Rank", yvar = "Revenues ($M)",
-                   options=list(title = "Distribution of Revenues per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+                   options=list(title = "Revenues by Rank", width="auto", height="150px", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
     }
     ## Show revenue per employee
     else if (input$radio == 3){
         gvisHistogram(f500[,"Revenues per Employee ($M)", drop = F]*1000,
-                      options=list(title = "Distribution of Revenues per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+                      options=list(title = "Distribution of Revenues per Employee ($1,000)", width="auto", height="150px", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
     }
   })
   
@@ -23,16 +23,19 @@ shinyServer(function(input, output, session){
     ## Show overall distribution of revenues
     if (input$radio == 1) {
       gvisHistogram(f500[,"Profits ($M)", drop = F],
-                    options=list(title = "Distribution of Profits ($M)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+                    options=list(title = "Distribution of Profits ($M)",
+                                 width="auto", height="150px", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
       
     } else if (input$radio == 2){
       gvisLineChart(f500, xvar = "Rank", yvar = "Profits ($M)",
-                    options=list(title = "Distribution of Profits per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+                    options=list(title = "Profits by Rank",
+                                 width="auto", height="150px", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
     }
     ## Show revenue per employee
     else if (input$radio == 3){
       gvisHistogram(f500[,"Profits per Employee ($M)", drop = F]*1000,
-                    options=list(title = "Distribution of Profits per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+                    options=list(title = "Distribution of Profits per Employee ($1,000)",
+                                 width="auto", height="150px", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
     }
   })
   
@@ -52,24 +55,24 @@ shinyServer(function(input, output, session){
   #   gvisHistogram(f500[,"Profits per Employee ($M)", drop = F]*1000,
   #                 options=list(title = "Distribution of Profits per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
   # })
-  output$overview_employees = renderGvis ({
-    gvisHistogram(f500[,"Employees", drop = F],
-                  options=list(title = "Distribution of Employees", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
-  })
-  output$overview_years = renderGvis ({
-    gvisHistogram(f500[,"Years on Fortune 500 List", drop = F],
-                  options=list(title = "Distribution of Time on Fortune 500 List", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
-  })
+  # output$overview_employees = renderGvis ({
+  #   gvisHistogram(f500[,"Employees", drop = F],
+  #                 options=list(title = "Distribution of Employees", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+  # })
+  # output$overview_years = renderGvis ({
+  #   gvisHistogram(f500[,"Years on Fortune 500 List", drop = F],
+  #                 options=list(title = "Distribution of Time on Fortune 500 List", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+  # })
   
   output$overview_rev_vs_prof = renderGvis({
     if (input$radio == 1 | input$radio == 2){
-      gvisScatterChart(rev_prof_tt,options=list(width="auto", height="850px",
+      gvisScatterChart(rev_prof_tt,options=list(width="auto", height="600px",
                                                 title="Revenues vs. Profits",
                                                 hAxis="{title:'Revenue ($M)'}",
                                                 vAxis="{title:'Profit ($M)'}",
                                                 explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
     } else if (input$radio ==3){
-      gvisScatterChart(e_rev_prof_tt,options=list(width="auto", height="850px",
+      gvisScatterChart(e_rev_prof_tt,options=list(width="auto", height="600px",
                                                   #title="Revenues and Profits",
                                                   hAxis="{title:'Revenue per Employee ($1,000)'}",
                                                   vAxis="{title:'Profit per Employee ($1,000)'}",
@@ -79,22 +82,53 @@ shinyServer(function(input, output, session){
 
   
   
-  output$overview_rev = renderGvis({
+  output$overview_employees = renderGvis({
     ## Show overall distribution of revenues
     if (input$radio == 1) {
-      gvisHistogram(f500[,"Revenues ($M)", drop = F],
-                    options=list(title = "Distribution of Revenues ($M)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+      gvisHistogram(f500[,"Employees", drop = F],
+                    options=list(title = "Distribution of Employees",
+                                 width="auto", height="150px", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
       
     } else if (input$radio == 2){
-      gvisLineChart(f500, xvar = "Rank", yvar = "Revenues ($M)",
-                    options=list(title = "Distribution of Revenues per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+      gvisLineChart(f500, xvar = "Rank", yvar = "Employees",
+                    options=list(title = "Employees by Rank",
+#                                 hAxis="{viewWindowMode:'explicit', viewWindow:{min:0, max:500}}",
+                                 width="auto", height="150px", legend="none",
+                                 explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
     }
     ## Show revenue per employee
     else if (input$radio == 3){
-      gvisHistogram(f500[,"Revenues per Employee ($M)", drop = F]*1000,
-                    options=list(title = "Distribution of Revenues per Employee ($1,000)", width="auto", height="auto", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+      gvisHistogram(f500[,"Employees", drop = F],
+                    options=list(title = "Distribution of Employeess", width="auto", height="150px", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
     }
   })
+  
+  
+  output$overview_years = renderGvis({
+    ## Show overall distribution of revenues
+    if (input$radio == 1) {
+      gvisHistogram(f500[,"Years on Fortune 500 List", drop = F],
+                    options=list(title = "Distribution of Time on Fortune 500 List", width="auto", height="150px", legend="none", explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+      
+    } else if (input$radio == 2){
+      gvisLineChart(f500, xvar = "Rank", yvar = "Years on Fortune 500 List",
+                    options=list(title = "Years on Fortune 500 List by Rank",
+                                 #hAxis="{viewWindowMode:'explicit', viewWindow:{min:0, max:500}}",
+                                 width="auto", height="150px", legend="none",
+                                 explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+    }
+    ## Show revenue per employee
+    else if (input$radio == 3){
+      gvisHistogram(f500[,"Years on Fortune 500 List", drop = F],
+                    options=list(title = "Distribution of Time on Fortune 500 List",
+                                 width="auto", height="150px", legend="none",
+                                 explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
+    }
+  })
+  
+  
+  
+  
   
   
   # COMPANY COMPARISON
@@ -243,30 +277,38 @@ shinyServer(function(input, output, session){
   # BREAKDOWN BY SECTOR
   output$sectors1 = renderGvis ({
     gvisPieChart(subset(by_sector_industry, Sector == input$sectors1)[,c(2,3)],
-                 options = list(title = paste("Industries in", input$sectors1, "Sector"), width = "auto", height = "400px"))
+                 options = list(title = paste("Industries in", input$sectors1, "Sector"), width = "auto", height = "225px"))
   })
   output$sectors2 = renderGvis ({
     gvisPieChart(subset(by_sector_industry, Sector == input$sectors2)[,c(2,3)],
-                 options = list(title = paste("Industries in", input$sectors2, "Sector"), width = "auto", height = "400px"))
+                 options = list(title = paste("Industries in", input$sectors2, "Sector"), width = "auto", height = "225px"))
   })
   
   ## Should try and stack the revenue (take out profits to get costs) and profits
   output$sectors1_rev_bar = renderGvis ({
     gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_rev = sum(`Revenues ($M)`)), Sector == input$sectors1)[,c(2,3)] %>% arrange(., desc(ttl_rev)), xvar = "Industry", yvar = "ttl_rev",
-                 options = list(title = paste("Total revenues by industry in", input$sectors1, "Sector"), width = "auto", height = "400px"))
+                 options = list(title = paste("Total revenues by industry in", input$sectors1, "Sector"),
+                                legend = "none",
+                                width = "auto", height = "150px"))
   })
   output$sectors2_rev_bar = renderGvis ({
     gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_rev = sum(`Revenues ($M)`)), Sector == input$sectors2)[,c(2,3)] %>% arrange(., desc(ttl_rev)), xvar = "Industry", yvar = "ttl_rev",
-                 options = list(title = paste("Total revenues by industry in", input$sectors2, "Sector"), width = "auto", height = "400px"))
+                 options = list(title = paste("Total revenues by industry in", input$sectors2, "Sector"),
+                                legend = "none",
+                                width = "auto", height = "150px"))
   })
   
   output$sectors1_prof_bar = renderGvis ({
     gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_prof = sum(`Profits ($M)`)), Sector == input$sectors1)[,c(2,3)] %>% arrange(., desc(ttl_prof)), xvar = "Industry", yvar = "ttl_prof",
-                 options = list(title = paste("Total profits by industry in", input$sectors1, "Sector"), width = "auto", height = "400px"))
+                 options = list(title = paste("Total profits by industry in", input$sectors1, "Sector"),
+                                legend = "none",
+                                width = "auto", height = "150px"))
   })
   output$sectors2_prof_bar = renderGvis ({
     gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_prof = sum(`Profits ($M)`)), Sector == input$sectors2)[,c(2,3)] %>% arrange(., desc(ttl_prof)), xvar = "Industry", yvar = "ttl_prof",
-                 options = list(title = paste("Total profits by industry in", input$sectors2, "Sector"), width = "auto", height = "400px"))
+                 options = list(title = paste("Total profits by industry in", input$sectors2, "Sector"),
+                                legend = "none",
+                                width = "auto", height = "150px"))
   })
 
   
@@ -276,22 +318,22 @@ shinyServer(function(input, output, session){
   output$avgrev_sector1 <- renderValueBox({
     avgrev_value = f500 %>% filter(., Sector == input$sectors1) %>% summarise(., mean = mean(`Revenues ($M)`, na.rm=TRUE))
     valueBox(value = tags$p(paste0("$", prettyNum(round(avgrev_value), big.mark = ","))),
-             subtitle = "Average Revenue ($M)", color = "olive")
+             subtitle = "Avg. Rev. ($M)", color = "olive")
   })
   output$avgprof_sector1 <- renderValueBox({
     avgprof_value = f500 %>% filter(., Sector == input$sectors1) %>% summarise(., mean = mean(`Profits ($M)`, na.rm=TRUE))
     valueBox(value = tags$p(paste0("$", prettyNum(round(avgprof_value), big.mark = ","))),
-             subtitle = "Average Profit ($M)", color = "olive")
+             subtitle = "Avg. Prof. ($M)", color = "olive")
   })
   output$avgrev_sector2 <- renderValueBox({
     avgrev_value = f500 %>% filter(., Sector == input$sectors2) %>% summarise(., mean = mean(`Revenues ($M)`, na.rm=TRUE))
     valueBox(value = tags$p(paste0("$", prettyNum(round(avgrev_value), big.mark = ","))),
-             subtitle = "Average Revenue ($M)", color = "olive")
+             subtitle = "Avg. Rev. ($M)", color = "olive")
   })
   output$avgprof_sector2 <- renderValueBox({
     avgprof_value = f500 %>% filter(., Sector == input$sectors2) %>% summarise(., mean = mean(`Profits ($M)`, na.rm=TRUE))
     valueBox(value = tags$p(paste0("$", prettyNum(round(avgprof_value), big.mark = ","))),
-             subtitle = "Average Profit ($M)", color = "olive")
+             subtitle = "Avg. Prof. ($M)", color = "olive")
   })
   
   
@@ -305,7 +347,7 @@ shinyServer(function(input, output, session){
                    options=list(region="US",
                                 displayMode="regions",
                                 resolution="provinces",
-                                width="auto", height="600px",
+                                width="auto", height="300px",
                                 legend = "none"))
     } else {
       gvisGeoChart(by_state,
@@ -314,66 +356,78 @@ shinyServer(function(input, output, session){
                    options=list(region="US",
                                 displayMode="regions",
                                 resolution="provinces",
-                                width="auto", height="600px",
+                                width="auto", height="300px",
                                 legend = "none"))
     }
   })
   output$avgrev_state1 <- renderValueBox({
     avgrev_value = f500 %>% filter(., State == input$state1) %>% summarise(., mean = mean(`Revenues ($M)`, na.rm=TRUE))
     valueBox(value = tags$p(paste0("$", prettyNum(round(avgrev_value), big.mark = ","))),
-             subtitle = "Avg. Revenue ($M)", color = "olive")
+             subtitle = "Avg. Rev. ($M)", color = "olive")
   })
   output$avgprof_state1 <- renderValueBox({
     avgprof_value = f500 %>% filter(., State == input$state1) %>% summarise(., mean = mean(`Profits ($M)`, na.rm=TRUE))
     valueBox(value = tags$p(paste0("$", prettyNum(round(avgprof_value), big.mark = ","))),
-             subtitle = "Avg. Profit ($M)", color = "olive")
+             subtitle = "Avg. Prof. ($M)", color = "olive")
   })
   output$avgrev_state2 <- renderValueBox({
     avgrev_value = f500 %>% filter(., State == input$state2) %>% summarise(., mean = mean(`Revenues ($M)`, na.rm=TRUE))
     valueBox(value = tags$p(paste0("$", prettyNum(round(avgrev_value), big.mark = ","))),
-             subtitle = "Avg. Revenue ($M)", color = "olive")
+             subtitle = "Avg. Rev. ($M)", color = "olive")
   })
   output$avgprof_state2 <- renderValueBox({
     avgprof_value = f500 %>% filter(., State == input$state2) %>% summarise(., mean = mean(`Profits ($M)`, na.rm=TRUE))
     valueBox(value = tags$p(paste0("$", prettyNum(round(avgprof_value), big.mark = ","))),
-             subtitle = "Avg. Profit ($M)", color = "olive")
+             subtitle = "Avg. Prof. ($M)", color = "olive")
   })
   output$revenue_hist_state1 = renderGvis({
     state1_rev = f500 %>% filter(., State == input$state1) %>% select(., `Revenues ($M)`)
     gvisHistogram(state1_rev,
-                  options=list(title = "Distribution of Revenue by State ($M)",
+                  options=list(title = paste("Distribution of Revenues in", input$state1, "($M)"),
                                width="auto", height="auto", legend="none",
                                explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
   })
   output$prof_hist_state1 = renderGvis({
     state1_prof = f500 %>% filter(., State == input$state1) %>% select(., `Profits ($M)`)
     gvisHistogram(state1_prof,
-                  options=list(title = "Distribution of Profit by State ($M)",
+                  options=list(title = paste("Distribution of Profits in", input$state1, "($M)"),
                                width="auto", height="auto", legend="none",
                                explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
   })
   output$revenue_hist_state2 = renderGvis({
     state2_rev = f500 %>% filter(., State == input$state2) %>% select(., `Revenues ($M)`)
     gvisHistogram(state2_rev,
-                  options=list(title = "Distribution of Revenue by State ($M)",
+                  options=list(title = paste("Distribution of Revenues in", input$state2, "($M)"),
                                width="auto", height="auto", legend="none",
                                explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
   })
   output$prof_hist_state2 = renderGvis({
     state2_prof = f500 %>% filter(., State == input$state2) %>% select(., `Profits ($M)`)
     gvisHistogram(state2_prof,
-                  options=list(title = "Distribution of Profit by State ($M)",
+                  options=list(title = paste("Distribution of Profits in", input$state2, "($M)"),
                                width="auto", height="auto", legend="none",
                                explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
   })
-  output$state1_table = renderDataTable({
+  # output$state1_table = renderDataTable({
+  #   state1_ranks = f500 %>% filter(., State == input$state1) %>% select(., Rank, Title) %>% arrange(., Rank)
+  #   datatable(state1_ranks, rownames = F, caption = paste("Company ranks in", input$state1), options=list(lengthMenu = c(4, 8, 12, 16)))
+  # })
+  # output$state2_table = renderDataTable({
+  #   state2_ranks = f500 %>% filter(., State == input$state2) %>% select(., Rank, Title) %>% arrange(., Rank)
+  #   datatable(state2_ranks, rownames = F, caption = paste("Company ranks in", input$state2), options=list(lengthMenu = c(4, 8, 12, 16)))
+  # })
+  output$state1_table = renderGvis({
     state1_ranks = f500 %>% filter(., State == input$state1) %>% select(., Rank, Title) %>% arrange(., Rank)
-    datatable(state1_ranks, rownames = F, caption = paste("Company ranks in", input$state1), options=list(lengthMenu = c(5, 10, 15, 20)))
+    gvisTable(state1_ranks, options=list(title = paste("Company ranks in", input$state1), page = 'enable'))
   })
-  output$state2_table = renderDataTable({
+  output$state2_table = renderGvis({
     state2_ranks = f500 %>% filter(., State == input$state2) %>% select(., Rank, Title) %>% arrange(., Rank)
-    datatable(state2_ranks, rownames = F, caption = paste("Company ranks in", input$state2), options=list(lengthMenu = c(5, 10, 15, 20)))
+    gvisTable(state2_ranks, options=list(title = paste("Company ranks in", input$state2), page = 'enable'))
   })
+  
+  
+  
+  
   
   
   # FEMALE HIGHLIGHTS
@@ -408,9 +462,9 @@ shinyServer(function(input, output, session){
   
   
   
-  output$table = DT::renderDataTable({
-    datatable(f500, rownames = F)
-  })
+  # output$table = DT::renderDataTable({
+  #   datatable(f500, rownames = F)
+  # })
 
   
   

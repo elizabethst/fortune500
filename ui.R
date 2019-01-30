@@ -42,10 +42,10 @@ shinyUI(
                                        htmlOutput("overview_prof"), br(),
                                        htmlOutput("overview_employees"), br(),
                                        htmlOutput("overview_years"),
-                                       width = 12, height = "900px"))),
+                                       width = 12, height = "650px"))),
                 #column(6, fluidRow(box(htmlOutput("overview_rev_emp"), width = 12))),
                 #column(6, fluidRow(box(htmlOutput("overview_prof_emp"), width = 12))),
-                column(7, box(htmlOutput("overview_rev_vs_prof"), width = 12, height = "900px"))#,
+                column(7, box(htmlOutput("overview_rev_vs_prof"), width = 12, height = "650px"))#,
                 #column(6, fluidRow(box(htmlOutput("overview_e_rev_vs_prof"), width = 12)))
         ),
         
@@ -116,22 +116,20 @@ shinyUI(
                                          choices = sector_choices,
                                          selected = "Technology")
                        ),
-
+                ## OUTPUT PIE CHARTS
+                column(6, fluidRow(box(htmlOutput("sectors1"), height = 250, width = 12))),
+                column(6, fluidRow(box(htmlOutput("sectors2"), height = 250, width = 12))),
+                
+                ## OUTPUT TOTAL REV BAR GRAPHS
+                column(6, fluidRow(box(htmlOutput("sectors1_rev_bar"), htmlOutput("sectors1_prof_bar"), height = 350, width = 12))),
+                column(6, fluidRow(box(htmlOutput("sectors2_rev_bar"), htmlOutput("sectors2_prof_bar"), height = 350, width = 12))),
+                
                 ## AVG REVENUE AND PROFIT
                 column(6, fluidRow(box(valueBoxOutput("avgrev_sector1", width = 6),
-                                        valueBoxOutput("avgprof_sector1", width = 6), width = 12))),
+                                       valueBoxOutput("avgprof_sector1", width = 6), width = 12, collapsible = TRUE, collapsed = TRUE))),
                 
                 column(6, fluidRow(box(valueBoxOutput("avgrev_sector2", width = 6),
-                                        valueBoxOutput("avgprof_sector2", width = 6), width = 12))),
-                ## OUTPUT PIE CHARTS
-                column(6, fluidRow(box(htmlOutput("sectors1"), height = 450, width = 12))),
-                column(6, fluidRow(box(htmlOutput("sectors2"), height = 450, width = 12))),
-                ## OUTPUT TOTAL REV BAR GRAPHS
-                column(6, fluidRow(box(htmlOutput("sectors1_rev_bar"), height = 450, width = 12))),
-                column(6, fluidRow(box(htmlOutput("sectors2_rev_bar"), height = 450, width = 12))),
-                ## OUTPUT TOTAL PROF BAR GRAPHS
-                column(6, fluidRow(box(htmlOutput("sectors1_prof_bar"), height = 450, width = 12))),
-                column(6, fluidRow(box(htmlOutput("sectors2_prof_bar"), height = 450, width = 12)))
+                                       valueBoxOutput("avgprof_sector2", width = 6), width = 12, collapsible = TRUE, collapsed = TRUE)))
                 ),
         
         ## Tab for Fortune 500 locations
@@ -144,8 +142,7 @@ shinyUI(
                          fluidRow(box(valueBoxOutput("avgrev_state1", width = 6),
                                       valueBoxOutput("avgprof_state1", width = 6), width = 12)),
                          fluidRow(box(htmlOutput("revenue_hist_state1", width = 12), width = 12)),
-                         fluidRow(box(htmlOutput("prof_hist_state1", width = 12), width = 12)),
-                         fluidRow(box(dataTableOutput("state1_table"), width = 12))
+                         fluidRow(box(htmlOutput("prof_hist_state1", width = 12), width = 12))
                          ),
                   ## STATE 2
                   column(3, selectizeInput(inputId = "state2",
@@ -155,14 +152,15 @@ shinyUI(
                          fluidRow(box(valueBoxOutput("avgrev_state2", width = 6),
                                       valueBoxOutput("avgprof_state2", width = 6), width = 12)),
                          fluidRow(box(htmlOutput("revenue_hist_state2", width = 12), width = 12)),
-                         fluidRow(box(htmlOutput("prof_hist_state2", width = 12), width = 12)),
-                         fluidRow(box(dataTableOutput("state2_table"), width = 12))
+                         fluidRow(box(htmlOutput("prof_hist_state2", width = 12), width = 12))
                          ),
                 ## MAP
                 column(6, fluidRow(box(htmlOutput("location"),
-                                       br(),
                                        checkboxInput("show", "Show comparison", value = FALSE),
-                                       height = 700, width = 12))
+                                       height = 350, width = 12)),
+                       fluidRow(box(htmlOutput("state1_table"), width = 6),
+                                box(htmlOutput("state2_table"), width = 6))
+                       
                 )
                 ),
 
