@@ -277,63 +277,58 @@ shinyServer(function(input, output, session){
   # BREAKDOWN BY SECTOR
   output$sectors1 = renderGvis ({
     gvisPieChart(subset(by_sector_industry, Sector == input$sectors1)[,c(2,3)],
-                 options = list(title = paste("Industries in", input$sectors1, "Sector"), width = "auto", height = "225px"))
+                 options = list(title = paste("Industries in", input$sectors1, "Sector"), width = "auto", height = "700px"))
   })
   output$sectors2 = renderGvis ({
     gvisPieChart(subset(by_sector_industry, Sector == input$sectors2)[,c(2,3)],
-                 options = list(title = paste("Industries in", input$sectors2, "Sector"), width = "auto", height = "225px"))
+                 options = list(title = paste("Industries in", input$sectors2, "Sector"), width = "auto", height = "700px"))
   })
   
   ## Should try and stack the revenue (take out profits to get costs) and profits
   output$sectors1_rev_bar = renderGvis ({
-    gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_rev = sum(`Revenues ($M)`)), Sector == input$sectors1)[,c(2,3)] %>% arrange(., desc(ttl_rev)), xvar = "Industry", yvar = "ttl_rev",
+    gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., `Total Revenue` = sum(`Revenues ($M)`)), Sector == input$sectors1)[,c(2,3)] %>% arrange(., desc(`Total Revenue`)), xvar = "Industry", yvar = "Total Revenue",
                  options = list(title = paste("Total revenues by industry in", input$sectors1, "Sector"),
                                 legend = "none",
-                                width = "auto", height = "150px"))
+                                width = "auto", height = "275px"))
   })
   output$sectors2_rev_bar = renderGvis ({
-    gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_rev = sum(`Revenues ($M)`)), Sector == input$sectors2)[,c(2,3)] %>% arrange(., desc(ttl_rev)), xvar = "Industry", yvar = "ttl_rev",
+    gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., `Total Revenue` = sum(`Revenues ($M)`)), Sector == input$sectors2)[,c(2,3)] %>% arrange(., desc(`Total Revenue`)), xvar = "Industry", yvar = "Total Revenue",
                  options = list(title = paste("Total revenues by industry in", input$sectors2, "Sector"),
                                 legend = "none",
-                                width = "auto", height = "150px"))
+                                width = "auto", height = "275px"))
   })
   
   output$sectors1_prof_bar = renderGvis ({
     gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_prof = sum(`Profits ($M)`)), Sector == input$sectors1)[,c(2,3)] %>% arrange(., desc(ttl_prof)), xvar = "Industry", yvar = "ttl_prof",
                  options = list(title = paste("Total profits by industry in", input$sectors1, "Sector"),
                                 legend = "none",
-                                width = "auto", height = "150px"))
+                                width = "auto", height = "275px"))
   })
   output$sectors2_prof_bar = renderGvis ({
     gvisBarChart(subset(f500 %>% group_by(., Sector, Industry) %>% summarise(., ttl_prof = sum(`Profits ($M)`)), Sector == input$sectors2)[,c(2,3)] %>% arrange(., desc(ttl_prof)), xvar = "Industry", yvar = "ttl_prof",
                  options = list(title = paste("Total profits by industry in", input$sectors2, "Sector"),
                                 legend = "none",
-                                width = "auto", height = "150px"))
+                                width = "auto", height = "275px"))
   })
 
   
-  
-  
+
   # REVENUE STATISTICS BY SECTOR USING INFOBOX
-  output$avgrev_sector1 <- renderValueBox({
+  output$avgrev_sector1 <- renderInfoBox({
     avgrev_value = f500 %>% filter(., Sector == input$sectors1) %>% summarise(., mean = mean(`Revenues ($M)`, na.rm=TRUE))
-    valueBox(value = tags$p(paste0("$", prettyNum(round(avgrev_value), big.mark = ","))),
-             subtitle = "Avg. Rev. ($M)", color = "olive")
+    infoBox(title = "Avg. Rev. ($M)",value = tags$p(paste0("$", prettyNum(round(avgrev_value), big.mark = ","))), color = "olive", icon = icon("fas fa-money-bill"))
   })
-  output$avgprof_sector1 <- renderValueBox({
+  output$avgprof_sector1 <- renderInfoBox({
     avgprof_value = f500 %>% filter(., Sector == input$sectors1) %>% summarise(., mean = mean(`Profits ($M)`, na.rm=TRUE))
-    valueBox(value = tags$p(paste0("$", prettyNum(round(avgprof_value), big.mark = ","))),
-             subtitle = "Avg. Prof. ($M)", color = "olive")
+    infoBox(title = "Avg. Prof. ($M)", value = tags$p(paste0("$", prettyNum(round(avgprof_value), big.mark = ","))), color = "olive", icon = icon("fas fa-hand-holding-usd"))
   })
-  output$avgrev_sector2 <- renderValueBox({
+  output$avgrev_sector2 <- renderInfoBox({
     avgrev_value = f500 %>% filter(., Sector == input$sectors2) %>% summarise(., mean = mean(`Revenues ($M)`, na.rm=TRUE))
-    valueBox(value = tags$p(paste0("$", prettyNum(round(avgrev_value), big.mark = ","))),
-             subtitle = "Avg. Rev. ($M)", color = "olive")
+    infoBox(title = "Avg. Rev. ($M)", value = tags$p(paste0("$", prettyNum(round(avgrev_value), big.mark = ","))), color = "olive", icon = icon("fas fa-money-bill"))
   })
-  output$avgprof_sector2 <- renderValueBox({
+  output$avgprof_sector2 <- renderInfoBox({
     avgprof_value = f500 %>% filter(., Sector == input$sectors2) %>% summarise(., mean = mean(`Profits ($M)`, na.rm=TRUE))
-    valueBox(value = tags$p(paste0("$", prettyNum(round(avgprof_value), big.mark = ","))),
-             subtitle = "Avg. Prof. ($M)", color = "olive")
+    infoBox(title = "Avg. Prof. ($M)", value = tags$p(paste0("$", prettyNum(round(avgprof_value), big.mark = ","))), color = "olive", icon = icon("fas fa-hand-holding-usd"))
   })
   
   
@@ -347,7 +342,7 @@ shinyServer(function(input, output, session){
                    options=list(region="US",
                                 displayMode="regions",
                                 resolution="provinces",
-                                width="auto", height="300px",
+                                width="auto", height="675px",
                                 legend = "none"))
     } else {
       gvisGeoChart(by_state,
@@ -356,7 +351,7 @@ shinyServer(function(input, output, session){
                    options=list(region="US",
                                 displayMode="regions",
                                 resolution="provinces",
-                                width="auto", height="300px",
+                                width="auto", height="675px",
                                 legend = "none"))
     }
   })
@@ -384,46 +379,48 @@ shinyServer(function(input, output, session){
     state1_rev = f500 %>% filter(., State == input$state1) %>% select(., `Revenues ($M)`)
     gvisHistogram(state1_rev,
                   options=list(title = paste("Distribution of Revenues in", input$state1, "($M)"),
-                               width="auto", height="auto", legend="none",
+                               width="auto", height="275px", legend="none",
                                explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
   })
   output$prof_hist_state1 = renderGvis({
     state1_prof = f500 %>% filter(., State == input$state1) %>% select(., `Profits ($M)`)
     gvisHistogram(state1_prof,
                   options=list(title = paste("Distribution of Profits in", input$state1, "($M)"),
-                               width="auto", height="auto", legend="none",
+                               width="auto", height="275px", legend="none",
                                explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
   })
   output$revenue_hist_state2 = renderGvis({
     state2_rev = f500 %>% filter(., State == input$state2) %>% select(., `Revenues ($M)`)
     gvisHistogram(state2_rev,
                   options=list(title = paste("Distribution of Revenues in", input$state2, "($M)"),
-                               width="auto", height="auto", legend="none",
+                               width="auto", height="275px", legend="none",
                                explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
   })
   output$prof_hist_state2 = renderGvis({
     state2_prof = f500 %>% filter(., State == input$state2) %>% select(., `Profits ($M)`)
     gvisHistogram(state2_prof,
                   options=list(title = paste("Distribution of Profits in", input$state2, "($M)"),
-                               width="auto", height="auto", legend="none",
+                               width="auto", height="275px", legend="none",
                                explorer="{actions:['dragToZoom', 'rightClickToReset'], maxZoomIn:0.01}"))
   })
-  # output$state1_table = renderDataTable({
+  output$state1_table = renderDataTable({
+    state1_ranks = f500 %>% filter(., State == input$state1) %>% select(., Rank, Title, `Revenues ($M)`, `Profits ($M)`) %>% 
+      mutate(., `Revenues ($M)` = paste0("$", prettyNum(`Revenues ($M)`, big.mark = ",")), `Profits ($M)` = paste0("$", prettyNum(`Profits ($M)`, big.mark = ","))) %>%  arrange(., Rank)
+    datatable(state1_ranks, rownames = F, caption = paste("Company ranks in", input$state1), options=list(lengthMenu = c(10, 20, 30, 40, 50)))
+  })
+  output$state2_table = renderDataTable({
+    state2_ranks = f500 %>% filter(., State == input$state2) %>% select(., Rank, Title, `Revenues ($M)`, `Profits ($M)`) %>% 
+      mutate(., `Revenues ($M)` = paste0("$", prettyNum(`Revenues ($M)`, big.mark = ",")), `Profits ($M)` = paste0("$", prettyNum(`Profits ($M)`, big.mark = ","))) %>%  arrange(., Rank)
+    datatable(state2_ranks, rownames = F, caption = paste("Company ranks in", input$state2), options=list(lengthMenu = c(10, 20, 30, 40, 50)))
+  })
+  # output$state1_table = renderGvis({
   #   state1_ranks = f500 %>% filter(., State == input$state1) %>% select(., Rank, Title) %>% arrange(., Rank)
-  #   datatable(state1_ranks, rownames = F, caption = paste("Company ranks in", input$state1), options=list(lengthMenu = c(4, 8, 12, 16)))
+  #   gvisTable(state1_ranks, options=list(title = paste("Company ranks in", input$state1), page = 'enable'))
   # })
-  # output$state2_table = renderDataTable({
+  # output$state2_table = renderGvis({
   #   state2_ranks = f500 %>% filter(., State == input$state2) %>% select(., Rank, Title) %>% arrange(., Rank)
-  #   datatable(state2_ranks, rownames = F, caption = paste("Company ranks in", input$state2), options=list(lengthMenu = c(4, 8, 12, 16)))
+  #   gvisTable(state2_ranks, options=list(title = paste("Company ranks in", input$state2), page = 'enable'))
   # })
-  output$state1_table = renderGvis({
-    state1_ranks = f500 %>% filter(., State == input$state1) %>% select(., Rank, Title) %>% arrange(., Rank)
-    gvisTable(state1_ranks, options=list(title = paste("Company ranks in", input$state1), page = 'enable'))
-  })
-  output$state2_table = renderGvis({
-    state2_ranks = f500 %>% filter(., State == input$state2) %>% select(., Rank, Title) %>% arrange(., Rank)
-    gvisTable(state2_ranks, options=list(title = paste("Company ranks in", input$state2), page = 'enable'))
-  })
   
   
   
@@ -434,11 +431,13 @@ shinyServer(function(input, output, session){
   output$femaleinfo = renderValueBox({
     infoBox(title = "Not-so-fun fact:", subtitle = "Only 5% of Fortune 500 CEOs in 2018 are female. You can check them out below!", icon = icon("venus"), color = "fuchsia")
   })
+  
   output$female_image = renderImage({
     filename = normalizePath(file.path("./images",
                                        paste0(f500_females %>% filter(., CEO == input$f_ceo) %>% pull(imagenames), ".jpg")))
     list(src = filename, width = "100%")
   }, deleteFile = FALSE)
+  
   output$female_f500_overview_name = renderInfoBox({
     infoBox(title = "Company CEO", value = input$f_ceo, icon = icon("female"), color = "fuchsia")
   })
