@@ -1,4 +1,3 @@
-# Define UI for application that draws a histogram
 shinyUI(
   
   dashboardPage(skin = "green",
@@ -6,6 +5,7 @@ shinyUI(
     
     dashboardSidebar(
       sidebarMenu(
+        
         ## GENERAL OVERVIEW
         menuItem("Overview of Fortune 500", tabName = "overview", icon = icon("fas fa-money-bill")),
         
@@ -24,15 +24,9 @@ shinyUI(
         ## GENDER BREAKDOWN
         menuItem("THE FUTURE IS FEMALE", tabName = "females", icon = icon("female")),
         
-        ## REFERENCES
-        menuItem("References", tabName = "references", icon = icon("female")),
-        
         ## ABOUT ME
-        menuItem("About me", tabName = "aboutme", icon = icon("female"))
+        menuItem("About", tabName = "contact", icon = icon("fas fa-info-circle"))
         
-        
-        # ## F500 DATA
-        # menuItem("Fortune 500 Data", tabName = "data", icon = icon("database"))
         )
       ),
     
@@ -41,36 +35,22 @@ shinyUI(
         ## Tab for overview
         tabItem(tabName = "overview",
                 tabBox(
-                  title = "First tabBox",
-                  # The id lets us use input$tabset1 on the server to find the current tab
-                  id = "tabset1", width = 12,
-                  tabPanel("Tab1", "First tab content"),
-                  tabPanel("Tab2", "Tab content 2"),
-                  tabPanel("Tab3", "Tab content 3")
+                  id = "overview_tab", width = 12,
+
+                  tabPanel("Overview",
+                           column(6, fluidRow(box(htmlOutput("overview_rev"), br(),
+                                               htmlOutput("overview_prof"), br(),
+                                               width = 12, height = "750px"))),
+                           column(6, box(htmlOutput("overview_rev_vs_prof"), width = 12, height = "750px"))
+                           ),
+                  tabPanel("Breakdown per Employee",
+                           column(6, fluidRow(box(htmlOutput("overview_rev_emp"), br(),
+                                                  htmlOutput("overview_prof_emp"), br(),
+                                                  width = 12, height = "750px"))),
+                           column(6, box(htmlOutput("overview_rev_vs_prof_emp"), width = 12, height = "750px"))
                 ),
-                column(12, radioButtons(inputId="radio", label = h5("How would you like to see the data?"),
-                             choices = list("Overall distributions" = 1, "By rank" = 2, "Per employee" = 3), 
-                             selected = 1,
-                             inline = TRUE)),
-                column(5, fluidRow(box(htmlOutput("overview_rev"), br(),
-                                       htmlOutput("overview_prof"), br(),
-                                       htmlOutput("overview_employees"), br(),
-                                       htmlOutput("overview_years"),
-                                       width = 12, height = "650px"))),
-                #column(6, fluidRow(box(htmlOutput("overview_rev_emp"), width = 12))),
-                #column(6, fluidRow(box(htmlOutput("overview_prof_emp"), width = 12))),
-                column(7, box(htmlOutput("overview_rev_vs_prof"), width = 12, height = "650px"))#,
-                #column(6, fluidRow(box(htmlOutput("overview_e_rev_vs_prof"), width = 12)))
-        ),
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                height = "900px"
+        )),
         
         ## Tab for company comparisons
         tabItem(tabName = "comparison",
@@ -81,19 +61,19 @@ shinyUI(
                                          selected = "Estee Lauder"),
                        br(),
                        infoBoxOutput("company1_CEO", width = 6),
-                           infoBoxOutput("company1_location", width = 6),
-                           infoBoxOutput("company1_rank", width = 6),
-                           infoBoxOutput("company1_rank_change", width = 6),
-                           infoBoxOutput("company1_sector", width = 6),
-                           infoBoxOutput("company1_industry", width = 6),
-                           infoBoxOutput("company1_revenue", width = 6),
-                           infoBoxOutput("company1_revenue_change", width = 6),
-                           infoBoxOutput("company1_profit", width = 6),
-                           infoBoxOutput("company1_profit_change", width = 6),
-                           infoBoxOutput("company1_assets", width = 6),
-                           infoBoxOutput("company1_mkt_value", width = 6),
-                           infoBoxOutput("company1_employees", width = 6),
-                           infoBoxOutput("company1_years", width = 6)
+                       infoBoxOutput("company1_location", width = 6),
+                       infoBoxOutput("company1_rank", width = 6),
+                       infoBoxOutput("company1_rank_change", width = 6),
+                       infoBoxOutput("company1_sector", width = 6),
+                       infoBoxOutput("company1_industry", width = 6),
+                       infoBoxOutput("company1_revenue", width = 6),
+                       infoBoxOutput("company1_revenue_change", width = 6),
+                       infoBoxOutput("company1_profit", width = 6),
+                       infoBoxOutput("company1_profit_change", width = 6),
+                       infoBoxOutput("company1_assets", width = 6),
+                       infoBoxOutput("company1_mkt_value", width = 6),
+                       infoBoxOutput("company1_employees", width = 6),
+                       infoBoxOutput("company1_years", width = 6)
                        ),
                 
                 ## INPUT 2 COMPANY 2
@@ -133,7 +113,6 @@ shinyUI(
                        ),
                 
                 tabBox(
-                  # The id lets us use input$tabset1 on the server to find the current tab
                   id = "sector_tab1", width = 12,
                   tabPanel("Industry breakdown",
                            ## OUTPUT PIE CHARTS
@@ -158,9 +137,6 @@ shinyUI(
                 
                 ## OUTPUT TOTAL REV BAR GRAPHS
                 
-                ## AVG REVENUE AND PROFIT
-                
-                #column(6, fluidRow())
                 ),
         
         ## Tab for Fortune 500 locations
@@ -178,7 +154,6 @@ shinyUI(
                        ),
                 
                 tabBox(
-                  # The id lets us use input$tabset1 on the server to find the current tab
                   id = "state_tab", width = 12,
                   tabPanel("Financial breakdown by state",
                            ## STATE 1
@@ -196,8 +171,6 @@ shinyUI(
                            ),
                   tabPanel("Ranking by state",
                            ## STATE 1
-                           
-                           
                            column(12,
                                   fluidRow(box(dataTableOutput("state1_table"), width = 6),
                                            box(dataTableOutput("state2_table"), width = 6))
@@ -205,7 +178,7 @@ shinyUI(
                            )
                   ),
                   ## MAP
-                  tabPanel("Company HQ by state",
+                  tabPanel("Map",
                            fluidRow(box(htmlOutput("location"),
                                         checkboxInput("show", "Show comparison", value = FALSE),
                                         height = 350, width = 12))),
@@ -213,7 +186,6 @@ shinyUI(
                   )
                 ),
 
-        
         ## Tab for gender breakdown
         tabItem(tabName = "females",
                 ## INPUT GENDER
@@ -229,24 +201,13 @@ shinyUI(
                 column(6,box(htmlOutput("female_biography"), width = 12))
         ),
         
-        ## Tab for references
-        tabItem(tabName = "references"), 
-        
         ## Tab for about me
-        tabItem(tabName = "aboutme",
+        tabItem(tabName = "contact",
                 column(12,
-                       box(width = 12, collapsible = TRUE),
-                       box(width = 12, collapsible = TRUE)))
-        
-        
-        
-        
-        # ## Tab for Fortune 500 data
-        # tabItem(tabName = "data",
-        #         # datatable
-        #         fluidRow(box(DT::dataTableOutput("table"),
-        #                      width = 12)))
-        
+                       box(htmlOutput("about"), width = 12),
+                       box(htmlOutput("contact"), width = 12)
+                       )
+        )
       )
     )
   )
