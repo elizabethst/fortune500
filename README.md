@@ -5,7 +5,3 @@ The Fortune 500 list is compiled by Fortune Magazine by ranking public and priva
 The [app](https://stellakim.shinyapps.io/fortune500/) that I created can be used as a comprehensive and comparative tool, to see how two categories (i.e companies, sectors, states) stack up against each other by different metrics.
 
 I also included a tab highlighting female CEOs on the 2018 Fortune 500 list. Women make up half the population and should make up half the workforce, not 5% (I'm looking at you Fortune 500, but this is a pervasive issue that occurs in all facets of life). Let's do better! :)
-
-
-
-NOTE: this app is still under development.
